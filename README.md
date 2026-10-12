@@ -52,7 +52,7 @@ Abrir Visual Studio Code y seleccionar:
 
 **Archivo → Abrir carpeta**
 
-Elegir la carpeta `gestor-recetas`.
+Elegir la carpeta `Gestor de Recetas`.
 
 ### Paso 3. Instalar las dependencias
 
