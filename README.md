@@ -41,7 +41,7 @@ git clone https://github.com/LinaFlores17/Gestor-de-Recetas
 Entrar en la carpeta del proyecto:
 
 ```bash
-cd gestor-recetas
+cd Gestor de Recetas
 ```
 
 También se puede descargar el proyecto desde GitHub mediante **Code → Download ZIP** y extraerlo en una carpeta.
