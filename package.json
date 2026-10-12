@@ -1,0 +1,13 @@
+
+{
+  "name": "gestor-recetas",
+  "version": "1.0.0",
+  "description": "Gestor de recetas con TypeScript y arquitectura MVC",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
