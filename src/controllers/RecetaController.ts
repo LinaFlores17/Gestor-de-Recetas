@@ -1,5 +1,4 @@
-
-import { Receta } from "../models/Receta.js";
+import { Receta, type Categoria } from "../models/Receta.js";
 import { RecetaView } from "../views/RecetaView.js";
 import { StorageService } from "../services/StorageService.js";
 
@@ -24,16 +23,17 @@ export class RecetaController {
       this.guardarReceta();
     });
 
-    document.querySelector("#buscar")!.addEventListener("input", () => {
-      this.actualizarVista();
-    });
-
-    document.querySelector("#filtro-tiempo")!.addEventListener("change", () => {
-      this.actualizarVista();
-    });
-
-    document.querySelector("#solo-favoritas")!.addEventListener("change", () => {
-      this.actualizarVista();
+    [
+      "buscar",
+      "filtro-categoria",
+      "filtro-tiempo",
+      "ordenar",
+      "solo-favoritas",
+    ].forEach((id) => {
+      const elemento = document.querySelector(`#${id}`)!;
+      elemento.addEventListener(id === "buscar" ? "input" : "change", () =>
+        this.actualizarVista(),
+      );
     });
 
     document.querySelector("#btn-cancelar")!.addEventListener("click", () => {
@@ -43,30 +43,45 @@ export class RecetaController {
   }
 
   private guardarReceta(): void {
-    const idActual = this.view.obtenerValor("receta-id");
+    const idTexto = this.view.obtenerValor("receta-id");
     const nombre = this.view.obtenerValor("nombre").trim();
 
-    const ingredientes = this.view.obtenerValor("ingredientes")
+    const ingredientes = this.view
+      .obtenerValor("ingredientes")
       .split(/[,\n]+/)
       .map((ingrediente) => ingrediente.trim())
       .filter((ingrediente) => ingrediente !== "");
 
     const tiempoTexto = this.view.obtenerValor("tiempo");
-    const tiempo = Number(tiempoTexto);
+    const porcionesTexto = this.view.obtenerValor("porciones");
 
-    if (tiempoTexto.trim() === "") {
-      this.view.mostrarMensaje("Escribe el tiempo de preparación.");
+    if (tiempoTexto.trim() === "" || porcionesTexto.trim() === "") {
+      this.view.mostrarMensaje("Completa el tiempo y las porciones.");
       return;
     }
 
-    const id = idActual ? Number(idActual) : Date.now();
+    const id = idTexto ? Number(idTexto) : Date.now();
+    const categoria = this.view.obtenerValor("categoria") as Categoria;
+
+    const duplicada = this.recetas.some(
+      (receta) =>
+        receta.id !== id &&
+        receta.nombre.trim().toLowerCase() === nombre.toLowerCase(),
+    );
+
+    if (duplicada) {
+      this.view.mostrarMensaje("Ya existe una receta con ese nombre.");
+      return;
+    }
 
     const receta = new Receta(
       id,
       nombre,
       ingredientes,
-      tiempo,
-      this.recetas.find((r) => r.id === id)?.favorita ?? false
+      Number(tiempoTexto),
+      this.recetas.find((r) => r.id === id)?.favorita ?? false,
+      categoria,
+      Number(porcionesTexto),
     );
 
     const error = receta.validar();
@@ -76,11 +91,8 @@ export class RecetaController {
       return;
     }
 
-    if (idActual) {
-      this.recetas = this.recetas.map((r) =>
-        r.id === id ? receta : r
-      );
-
+    if (idTexto) {
+      this.recetas = this.recetas.map((r) => (r.id === id ? receta : r));
       this.view.mostrarMensaje("¡Receta actualizada correctamente!");
     } else {
       this.recetas.push(receta);
@@ -97,22 +109,15 @@ export class RecetaController {
 
     if (receta) {
       this.view.prepararEdicion(receta);
-      this.view.mostrarMensaje("Modifica los datos de la receta.");
+      this.view.mostrarMensaje("Modifica los datos y pulsa Actualizar receta.");
     }
   }
 
   private eliminarReceta(id: number): void {
     const receta = this.recetas.find((r) => r.id === id);
+    if (!receta) return;
 
-    if (!receta) {
-      return;
-    }
-
-    const confirmar = window.confirm(
-      `¿Deseas eliminar la receta "${receta.nombre}"?`
-    );
-
-    if (!confirmar) {
+    if (!window.confirm(`¿Deseas eliminar la receta "${receta.nombre}"?`)) {
       return;
     }
 
@@ -128,53 +133,67 @@ export class RecetaController {
   }
 
   private cambiarFavorita(id: number): void {
-    this.recetas = this.recetas.map((r) => {
-      if (r.id === id) {
-        return new Receta(
-          r.id,
-          r.nombre,
-          r.ingredientes,
-          r.tiempo,
-          !r.favorita
-        );
-      }
-
-      return r;
-    });
+    this.recetas = this.recetas.map((r) =>
+      r.id === id
+        ? new Receta(
+            r.id,
+            r.nombre,
+            r.ingredientes,
+            r.tiempo,
+            !r.favorita,
+            r.categoria,
+            r.porciones,
+          )
+        : r,
+    );
 
     this.guardarDatos();
     this.actualizarVista();
   }
 
+  private imprimirReceta(id: number): void {
+    const receta = this.recetas.find((r) => r.id === id);
+    if (receta) {
+      this.view.imprimirReceta(receta);
+    }
+  }
+
   private actualizarVista(): void {
     const busqueda = this.view.obtenerValor("buscar").toLowerCase().trim();
+    const categoria = this.view.obtenerValor("filtro-categoria");
     const tiempoMaximo = Number(this.view.obtenerValor("filtro-tiempo"));
-    const soloFavoritas =
-      (document.querySelector<HTMLInputElement>("#solo-favoritas")!)
-        .checked;
+    const soloFavoritas = this.view.estaMarcado("solo-favoritas");
+    const orden = this.view.obtenerValor("ordenar");
 
-    const filtradas = this.recetas.filter((receta) => {
+    let filtradas = this.recetas.filter((receta) => {
       const coincideNombre = receta.nombre.toLowerCase().includes(busqueda);
-
       const coincideIngrediente = receta.ingredientes.some((ingrediente) =>
-        ingrediente.toLowerCase().includes(busqueda)
+        ingrediente.toLowerCase().includes(busqueda),
       );
 
-      const coincideBusqueda = coincideNombre || coincideIngrediente;
-
-      const coincideTiempo =
-        tiempoMaximo === 0 || receta.tiempo <= tiempoMaximo;
-
-      const coincideFavorita = !soloFavoritas || receta.favorita;
-
-      return coincideBusqueda && coincideTiempo && coincideFavorita;
+      return (
+        (coincideNombre || coincideIngrediente) &&
+        (!categoria || receta.categoria === categoria) &&
+        (tiempoMaximo === 0 || receta.tiempo <= tiempoMaximo) &&
+        (!soloFavoritas || receta.favorita)
+      );
     });
 
+    if (orden === "nombre") {
+      filtradas = [...filtradas].sort((a, b) =>
+        a.nombre.localeCompare(b.nombre, "es"),
+      );
+    } else if (orden === "tiempo") {
+      filtradas = [...filtradas].sort((a, b) => a.tiempo - b.tiempo);
+    }
+
+    this.view.actualizarContadores(this.recetas);
     this.view.mostrarRecetas(
       filtradas,
       (id) => this.editarReceta(id),
       (id) => this.eliminarReceta(id),
-      (id) => this.cambiarFavorita(id)
+      (id) => this.cambiarFavorita(id),
+      (id) => this.imprimirReceta(id),
     );
   }
 

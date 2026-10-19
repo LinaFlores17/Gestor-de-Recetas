@@ -1,125 +1,203 @@
 # 🍳 Gestor de Recetas
 
-## 1. Descripción del proyecto
+Aplicación web desarrollada en TypeScript para registrar, organizar y administrar recetas de cocina. Utiliza la arquitectura Modelo–Vista–Controlador (MVC), almacenamiento local y una interfaz sencilla e intuitiva.
 
-El Gestor de Recetas es una aplicación web desarrollada con TypeScript, HTML y CSS que permite registrar y organizar recetas de cocina.
+## 📋 Descripción del proyecto
 
-El proyecto utiliza la arquitectura MVC (Modelo-Vista-Controlador) para separar los datos, la interfaz y la lógica de la aplicación.
+El Gestor de Recetas permite crear una colección personal de recetas, consultar sus ingredientes, clasificarlas por categoría y administrar la información desde el navegador.
 
-## 2. Tecnologías utilizadas
+Esta versión incorpora mejoras en la búsqueda, edición, filtrado, ordenamiento y validación de los datos, además de nuevas opciones para imprimir recetas y visualizar contadores por categoría.
 
-- HTML5
-- CSS3
-- TypeScript
-- JavaScript
-- localStorage
-- Node.js y npm
-- TypeScript Compiler (`tsc`)
-- Visual Studio Code
-- Live Server
+## 🛠️ Tecnologías utilizadas
 
-## 3. Requisitos previos
+- **TypeScript:** lógica de la aplicación y definición de clases.
+- **HTML5:** estructura de la interfaz.
+- **CSS3:** estilos y diseño adaptable.
+- **localStorage:** persistencia de los datos en el navegador.
+- **Node.js y npm:** instalación de dependencias y ejecución de scripts.
+- **TypeScript Compiler (`tsc`):** compilación de TypeScript a JavaScript.
+- **Visual Studio Code:** editor de código.
+- **Live Server:** servidor local para visualizar la aplicación.
+
+## ✨ Funcionalidades
+
+### 1. Gestión de recetas
+
+- Registrar recetas con nombre, ingredientes, tiempo de preparación, categoría y porciones.
+- Consultar las recetas registradas mediante tarjetas.
+- Editar recetas existentes.
+- Eliminar recetas mediante una confirmación.
+- Marcar y desmarcar recetas como favoritas.
+
+### 2. Búsqueda y filtros
+
+- Buscar recetas por nombre.
+- Buscar recetas por ingrediente.
+- Filtrar por categoría: desayuno, almuerzo o cena.
+- Filtrar por tiempo máximo de preparación.
+- Mostrar únicamente las recetas favoritas.
+- Combinar la búsqueda y los filtros para obtener resultados más específicos.
+
+### 3. Ordenamiento
+
+- Ordenar las recetas alfabéticamente por nombre.
+- Ordenar las recetas por tiempo de preparación.
+
+### 4. Contadores por categoría
+
+La interfaz muestra la cantidad de recetas registradas en cada categoría:
+
+- Desayuno.
+- Almuerzo.
+- Cena.
+
+Los contadores representan la colección completa, independientemente de los filtros aplicados.
+
+### 5. Impresión de recetas
+
+Cada tarjeta incluye una opción para imprimir una receta individual con su nombre, categoría, tiempo de preparación, porciones e ingredientes.
+
+### 6. Validaciones
+
+El sistema comprueba que:
+
+- El nombre de la receta no esté vacío.
+- Se haya agregado al menos un ingrediente.
+- El tiempo de preparación sea un entero mayor que cero.
+- Las porciones sean un entero mayor que cero.
+- La categoría corresponda a una opción válida.
+- No exista otra receta con el mismo nombre.
+
+Las validaciones ayudan a mantener la información organizada y a prevenir registros incorrectos.
+
+### 7. Persistencia de datos
+
+Las recetas se guardan en `localStorage`, por lo que permanecen disponibles después de recargar la página.
+
+La aplicación también contempla valores predeterminados para recetas guardadas anteriormente que no tengan los campos de categoría y porciones.
+
+**Nota:** los datos se guardan en el navegador utilizado y no se sincronizan automáticamente con otros dispositivos.
+
+## 🏗️ Arquitectura MVC
+
+El proyecto separa sus responsabilidades en clases y archivos para facilitar el mantenimiento y la comprensión del código.
+
+| Componente            | Responsabilidad                                                                |
+| --------------------- | ------------------------------------------------------------------------------ |
+| `Receta.ts`           | Modelo que define los atributos y las validaciones de una receta.              |
+| `RecetaView.ts`       | Presenta los formularios, tarjetas, filtros, mensajes y opciones de impresión. |
+| `RecetaController.ts` | Coordina los eventos, las operaciones CRUD, las búsquedas y los filtros.       |
+| `StorageService.ts`   | Guarda y recupera los datos utilizando `localStorage`.                         |
+| `main.ts`             | Inicializa la aplicación.                                                      |
+| `styles.css`          | Define la apariencia visual de la interfaz.                                    |
+
+### ¿Qué significa MVC?
+
+- **Model:** representa los datos y las reglas de validación.
+- **View:** muestra la información y los controles de la interfaz.
+- **Controller:** coordina las acciones del usuario y las operaciones del sistema.
+
+Esta separación evita concentrar toda la lógica en un solo archivo y facilita futuras modificaciones.
+
+## 📁 Estructura del proyecto
+
+```text
+Gestor-de-Recetas/
+├── index.html
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── README.md
+├── src/
+│   ├── main.ts
+│   ├── models/
+│   │   └── Receta.ts
+│   ├── views/
+│   │   └── RecetaView.ts
+│   ├── controllers/
+│   │   └── RecetaController.ts
+│   ├── services/
+│   │   └── StorageService.ts
+│   └── styles/
+│       └── styles.css
+└── dist/
+    ├── main.js
+    ├── models/
+    ├── views/
+    ├── controllers/
+    └── services/
+```
+
+La carpeta `dist` contiene los archivos JavaScript generados durante la compilación de TypeScript.
+
+## ⚙️ Requisitos previos
 
 Antes de ejecutar el proyecto, se necesita:
 
-- Tener instalado [Node.js](https://nodejs.org/).
-- Tener instalado [Visual Studio Code](https://code.visualstudio.com/).
-- Tener un navegador web actualizado.
-- Tener conexión a Internet para instalar las dependencias.
+- Node.js y npm instalados.
+- Visual Studio Code.
+- Un navegador web actualizado.
+- La extensión Live Server de Visual Studio Code.
 
-## 4. Instalación del proyecto
+Descargas oficiales:
+
+- [Node.js](https://nodejs.org/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+## 🚀 Instalación y ejecución
 
 ### Paso 1. Descargar el repositorio
 
 Clonar el repositorio desde una terminal:
 
 ```bash
-git clone https://github.com/LinaFlores17/Gestor-de-Recetas
+git clone https://github.com/LinaFlores17/Gestor-de-Recetas.git
 ```
 
-
-Entrar en la carpeta del proyecto:
+Entrar en la carpeta:
 
 ```bash
-cd gestor-recetas
+cd Gestor-de-Recetas
 ```
 
-También se puede descargar el proyecto desde GitHub mediante **Code → Download ZIP** y extraerlo en una carpeta.
+También se puede descargar el repositorio desde GitHub utilizando **Code → Download ZIP** y extraerlo.
 
-### Paso 2. Abrir el proyecto
+### Paso 2. Abrir el proyecto en VS Code
 
-Abrir Visual Studio Code y seleccionar:
+Desde la terminal, ejecutar:
 
-**Archivo → Abrir carpeta**
+```bash
+code .
+```
 
-Elegir la carpeta `gestor-recetas`.
+También se puede abrir la carpeta desde el menú **Archivo → Abrir carpeta** de Visual Studio Code.
 
 ### Paso 3. Instalar las dependencias
 
-Abrir la terminal de Visual Studio Code desde **Terminal → Nueva terminal** y ejecutar:
+Abrir la terminal integrada de VS Code y ejecutar:
 
 ```bash
 npm install
 ```
 
-Este comando instala las dependencias necesarias para compilar el proyecto.
+Este comando instala las dependencias declaradas en `package.json`.
 
 ### Paso 4. Compilar TypeScript
 
-Ejecutar el siguiente comando:
+Ejecutar:
 
 ```bash
 npm run build
 ```
 
-Este comando convierte los archivos TypeScript de la carpeta `src` en archivos JavaScript dentro de la carpeta `dist`.
+El comando compila los archivos `.ts` y genera los archivos `.js` en `dist`.
 
-Si la compilación termina correctamente, se puede continuar.
+### Paso 5. Ejecutar la aplicación
 
-## 5. Ejecutar la aplicación
+1. Abrir `index.html` en Visual Studio Code.
+2. Hacer clic derecho sobre el archivo.
+3. Seleccionar **Open with Live Server**.
+4. La aplicación se abrirá en el navegador.
 
-1. Abrir Visual Studio Code.
-2. Instalar la extensión **Live Server** desde el apartado Extensiones.
-3. Ejecutar `npm run build` para generar los archivos JavaScript.
-4. Hacer clic derecho sobre `index.html`.
-5. Seleccionar **Open with Live Server**.
 
-La aplicación se abrirá en el navegador.
 
-**Importante:** cada vez que se modifique un archivo `.ts`, se debe ejecutar nuevamente `npm run build` para actualizar los archivos JavaScript.
-
-## 6. Funcionalidades
-
-- Registrar recetas con nombre, ingredientes y tiempo de preparación.
-- Mostrar las recetas registradas.
-- Buscar recetas por nombre o ingrediente.
-- Marcar y desmarcar recetas como favoritas.
-- Editar recetas existentes.
-- Eliminar recetas con confirmación.
-- Filtrar recetas por tiempo de preparación.
-- Validar los datos del formulario.
-- Guardar y recuperar recetas mediante `localStorage`.
-
-## 7. Arquitectura MVC
-
-- **Modelo:** `src/models/Receta.ts`. Define los datos y las validaciones.
-- **Vista:** `src/views/RecetaView.ts`. Muestra el formulario, las tarjetas y los mensajes.
-- **Controlador:** `src/controllers/RecetaController.ts`. Gestiona los eventos y las operaciones de la aplicación.
-- **Almacenamiento:** `src/services/StorageService.ts`. Guarda y recupera las recetas.
-- **Archivo principal:** `src/main.ts`. Inicializa los componentes.
-- **Estilos:** `src/styles/styles.css`. Define el diseño visual.
-
-## 8. Almacenamiento de datos
-
-La aplicación utiliza `localStorage` para conservar las recetas en el navegador.
-
-Los datos permanecen guardados después de actualizar o cerrar la página, siempre que no se borren los datos del navegador.
-
-Las recetas no se comparten automáticamente entre diferentes navegadores o dispositivos.
-
-## 9. Consideraciones
-
-- Ejecutar `npm run build` después de modificar archivos TypeScript.
-- No eliminar la carpeta `dist` sin volver a compilar.
-- Abrir la aplicación mediante Live Server.
-- No se necesita una base de datos externa.

@@ -1,23 +1,31 @@
 
+export type Categoria = "Desayuno" | "Almuerzo" | "Cena";
+
 export class Receta {
   id: number;
   nombre: string;
   ingredientes: string[];
   tiempo: number;
   favorita: boolean;
+  categoria: Categoria;
+  porciones: number;
 
   constructor(
     id: number,
     nombre: string,
     ingredientes: string[],
     tiempo: number,
-    favorita: boolean = false
+    favorita: boolean = false,
+    categoria: Categoria = "Cena",
+    porciones: number = 1
   ) {
     this.id = id;
     this.nombre = nombre;
     this.ingredientes = ingredientes;
     this.tiempo = tiempo;
     this.favorita = favorita;
+    this.categoria = categoria;
+    this.porciones = porciones;
   }
 
   validar(): string | null {
@@ -29,12 +37,26 @@ export class Receta {
       return "Agrega al menos un ingrediente.";
     }
 
+    if (this.ingredientes.some(ingrediente => ingrediente.trim() === "")) {
+      return "Revisa los ingredientes.";
+    }
+
     if (
-      !Number.isFinite(this.tiempo) ||
-      this.tiempo <= 0 ||
-      !Number.isInteger(this.tiempo)
+      !Number.isInteger(this.tiempo) ||
+      this.tiempo <= 0
     ) {
       return "El tiempo debe ser un número entero mayor que cero.";
+    }
+
+    if (
+      !Number.isInteger(this.porciones) ||
+      this.porciones <= 0
+    ) {
+      return "Las porciones deben ser un número entero mayor que cero.";
+    }
+
+    if (!["Desayuno", "Almuerzo", "Cena"].includes(this.categoria)) {
+      return "Selecciona una categoría válida.";
     }
 
     return null;

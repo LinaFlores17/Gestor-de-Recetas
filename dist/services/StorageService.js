@@ -13,7 +13,14 @@ export class StorageService {
             if (!Array.isArray(recetas)) {
                 return [];
             }
-            return recetas.map((r) => new Receta(r.id, r.nombre, r.ingredientes, r.tiempo, r.favorita));
+            return recetas.map((dato) => {
+                const r = dato;
+                const categorias = ["Desayuno", "Almuerzo", "Cena"];
+                const categoria = categorias.includes(r.categoria)
+                    ? r.categoria
+                    : "Cena";
+                return new Receta(Number(r.id), String(r.nombre ?? ""), Array.isArray(r.ingredientes) ? r.ingredientes.map(String) : [], Number(r.tiempo), Boolean(r.favorita), categoria, Number(r.porciones) > 0 ? Number(r.porciones) : 1);
+            });
         }
         catch {
             return [];

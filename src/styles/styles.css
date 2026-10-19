@@ -312,3 +312,80 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Nuevos campos del formulario */
+#categoria,
+#porciones,
+#filtro-categoria,
+#ordenar {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d5dedb;
+  border-radius: 8px;
+  font: inherit;
+  background: white;
+}
+
+#categoria:focus,
+#porciones:focus,
+#filtro-categoria:focus,
+#ordenar:focus {
+  outline: 2px solid #12b8a6;
+  outline-offset: 1px;
+}
+
+/* Categoría de cada receta */
+.categoria {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background: #e3f8f1;
+  color: #087f70;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* Contadores por categoría */
+.resumen-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.resumen-categorias span {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #eef5ff;
+  color: #24466f;
+}
+
+/* Filtros en pantallas pequeñas */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filtros > input,
+.filtros > select {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+
+.acciones button {
+  margin: 4px;
+}
+
+@media (max-width: 600px) {
+  .resumen-categorias {
+    flex-direction: column;
+  }
+
+  .acciones {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
