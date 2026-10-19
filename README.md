@@ -1,6 +1,6 @@
 # 🍳 Gestor de Recetas
 
-Aplicación web desarrollada en TypeScript para registrar, organizar y administrar recetas de cocina. Utiliza la arquitectura Modelo–Vista–Controlador (MVC), almacenamiento local y una interfaz sencilla e intuitiva.
+Aplicación web desarrollada en TypeScript para registrar, organizar y administrar recetas de cocina. Utiliza la arquitectura Modelo-Vista-Controlador (MVC), almacenamiento local y una interfaz sencilla e intuitiva.
 
 ## 📋 Descripción del proyecto
 
@@ -13,7 +13,7 @@ Esta versión incorpora mejoras en la búsqueda, edición, filtrado, ordenamient
 - **TypeScript:** lógica de la aplicación y definición de clases.
 - **HTML5:** estructura de la interfaz.
 - **CSS3:** estilos y diseño adaptable.
-- **localStorage:** persistencia de los datos en el navegador.
+- **`localStorage`:** persistencia de los datos en el navegador.
 - **Node.js y npm:** instalación de dependencias y ejecución de scripts.
 - **TypeScript Compiler (`tsc`):** compilación de TypeScript a JavaScript.
 - **Visual Studio Code:** editor de código.
@@ -76,20 +76,20 @@ Las recetas se guardan en `localStorage`, por lo que permanecen disponibles desp
 
 La aplicación también contempla valores predeterminados para recetas guardadas anteriormente que no tengan los campos de categoría y porciones.
 
-**Nota:** los datos se guardan en el navegador utilizado y no se sincronizan automáticamente con otros dispositivos.
+> **Nota:** los datos se guardan en el navegador utilizado y no se sincronizan automáticamente con otros dispositivos.
 
 ## 🏗️ Arquitectura MVC
 
 El proyecto separa sus responsabilidades en clases y archivos para facilitar el mantenimiento y la comprensión del código.
 
-| Componente            | Responsabilidad                                                                |
-| --------------------- | ------------------------------------------------------------------------------ |
-| `Receta.ts`           | Modelo que define los atributos y las validaciones de una receta.              |
-| `RecetaView.ts`       | Presenta los formularios, tarjetas, filtros, mensajes y opciones de impresión. |
-| `RecetaController.ts` | Coordina los eventos, las operaciones CRUD, las búsquedas y los filtros.       |
-| `StorageService.ts`   | Guarda y recupera los datos utilizando `localStorage`.                         |
-| `main.ts`             | Inicializa la aplicación.                                                      |
-| `styles.css`          | Define la apariencia visual de la interfaz.                                    |
+| Componente | Responsabilidad |
+| --- | --- |
+| `Receta.ts` | Modelo que define los atributos y validaciones de una receta. |
+| `RecetaView.ts` | Presenta formularios, tarjetas, filtros, mensajes y opciones de impresión. |
+| `RecetaController.ts` | Coordina eventos, operaciones CRUD, búsquedas y filtros. |
+| `StorageService.ts` | Guarda y recupera datos mediante `localStorage`. |
+| `main.ts` | Inicializa la aplicación. |
+| `styles.css` | Define la apariencia visual de la interfaz. |
 
 ### ¿Qué significa MVC?
 
@@ -132,14 +132,14 @@ La carpeta `dist` contiene los archivos JavaScript generados durante la compilac
 
 ## ⚙️ Requisitos previos
 
-Antes de ejecutar el proyecto, se necesita:
+Antes de ejecutar el proyecto se necesita:
 
 - Node.js y npm instalados.
 - Visual Studio Code.
 - Un navegador web actualizado.
 - La extensión Live Server de Visual Studio Code.
 
-Descargas oficiales:
+### Descargas oficiales
 
 - [Node.js](https://nodejs.org/)
 - [Visual Studio Code](https://code.visualstudio.com/)
@@ -152,11 +152,6 @@ Clonar el repositorio desde una terminal:
 
 ```bash
 git clone https://github.com/LinaFlores17/Gestor-de-Recetas.git
-```
-
-Entrar en la carpeta:
-
-```bash
 cd Gestor-de-Recetas
 ```
 
@@ -170,21 +165,15 @@ Desde la terminal, ejecutar:
 code .
 ```
 
-También se puede abrir la carpeta desde el menú **Archivo → Abrir carpeta** de Visual Studio Code.
+También se puede abrir la carpeta desde **Archivo → Abrir carpeta**.
 
-### Paso 3. Instalar las dependencias
-
-Abrir la terminal integrada de VS Code y ejecutar:
+### Paso 3. Instalar dependencias
 
 ```bash
 npm install
 ```
 
-Este comando instala las dependencias declaradas en `package.json`.
-
 ### Paso 4. Compilar TypeScript
-
-Ejecutar:
 
 ```bash
 npm run build
@@ -198,6 +187,3 @@ El comando compila los archivos `.ts` y genera los archivos `.js` en `dist`.
 2. Hacer clic derecho sobre el archivo.
 3. Seleccionar **Open with Live Server**.
 4. La aplicación se abrirá en el navegador.
-
-
-
