@@ -162,10 +162,18 @@ También se puede descargar el repositorio desde GitHub utilizando **Code → Do
 Desde la terminal, ejecutar:
 
 ```bash
-code .
+cd gestor-recetas
 ```
 
-También se puede abrir la carpeta desde **Archivo → Abrir carpeta**.
+También se puede descargar el proyecto desde GitHub mediante **Code → Download ZIP** y extraerlo en una carpeta.
+
+### Paso 2. Abrir el proyecto
+
+Abrir Visual Studio Code y seleccionar:
+
+**Archivo → Abrir carpeta**
+
+Elegir la carpeta `gestor-recetas`.
 
 ### Paso 3. Instalar dependencias
 
